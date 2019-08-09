@@ -1,0 +1,131 @@
+<form [formGroup]="userForms" autocomplete="off" (submit)="onSubmit()"  class="container px-lg-5">
+    <div class="row">
+        <div class="col-sm-2">
+            image section
+        </div>
+        
+        <div class="col col-sm-5" formGroupName="userDetails">
+            <h3>User Details</h3>
+            <div class="form-group">
+                <label>FullName: </label>
+                <input class="form-control" placeholder="" formControlName="FullName" [class.is-invalid]=""/>
+                <div *ngFor="let validation of account_validation_msgs.FullName">
+                    <p class="text-danger input-error" *ngIf="(userForms.get('userDetails.FullName').touched || userForms.get('userDetails.FullName').dirty)
+                                                    &&userForms.get('userDetails.FullName').hasError(validation.type)">{{validation.msg}}</p>
+                </div>
+                
+            </div>
+
+            <div class="form-group">
+                <label>Gender: </label>
+                <select formControlName="Gender" class="form-control form-control-sm form-select" required>
+                <option value="">Open this select menu</option>
+                <option *ngFor="let item of genderChoices|keyvalue" value="{{item.key}}">{{item.value}}</option>
+                </select>
+                <div *ngFor="let validation of account_validation_msgs.Gender">
+                    <p class="text-danger input-error" *ngIf="(userForms.get('userDetails.Gender').touched || userForms.get('userDetails.Gender').dirty)
+                                                    &&userForms.get('userDetails.Gender').hasError(validation.type)">{{validation.msg}}</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Birthday: </label>
+                <input type="date" class="form-control" placeholder="" formControlName="Birthday"/>
+                <div *ngFor="let validation of account_validation_msgs.Birthday">
+                    <p class="text-danger input-error" *ngIf="(userForms.get('userDetails.Birthday').touched || userForms.get('userDetails.Birthday').dirty)
+                                                    &&userForms.get('userDetails.Birthday').hasError(validation.type)">{{validation.msg}}</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Country: </label>
+                        <select formControlName="Country" class="form-control" required>
+                            <option value="">--</option>
+                            <option *ngFor="let item of countryChoices|keyvalue" value="{{item.key}}">{{item.value}}</option>
+                        </select>
+                        <div *ngFor="let validation of account_validation_msgs.Country">
+                            <p class="text-danger input-error" *ngIf="(userForms.get('userDetails.Country').touched || userForms.get('userDetails.Country').dirty)
+                                                    &&userForms.get('userDetails.Country').hasError(validation.type)">{{validation.msg}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="form-group">
+                        <label>Phone No: </label>
+                        <input type="tel"class="form-control" placeholder="###-###-####" formControlName="PhoneNo" #PhoneNo (keyup)="phoneNoAutoAdd(PhoneNo.value)"  maxlength="12"/>
+                        <div *ngFor="let validation of account_validation_msgs.PhoneNo">
+                            <p class="text-danger input-error" *ngIf="(userForms.get('userDetails.PhoneNo').touched || userForms.get('userDetails.PhoneNo').dirty)
+                                                        &&userForms.get('userDetails.PhoneNo').hasError(validation.type)">{{validation.msg}}</p>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Bios</label>
+                <textarea maxlength="200" class="form-control" rows="4" formControlName="Bios" #Bios></textarea>
+                <p><small style="float:left">Tell us about yourself</small> 
+                    <small style="float:right"><span>{{Bios.value.length}}</span>/200</small></p>
+                
+            </div>
+        </div>
+
+        <div class="col col-sm-5">
+            <div formGroupName="accountDetails">
+                <h3>Account Details</h3>
+                <div class="form-group">
+                    <label>Email: </label>
+                    <input class="form-control" placeholder="" formControlName="Email"/>
+                    <div *ngFor="let validation of account_validation_msgs.Email">
+                        <p class="text-danger input-error" *ngIf="(userForms.get('accountDetails.Email').touched || userForms.get('accountDetails.Email').dirty)
+                                                &&userForms.get('accountDetails.Email').hasError(validation.type)">{{validation.msg}}</p>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Username: </label>
+                    <input class="form-control" placeholder="" formControlName="Username"/>
+                    <div *ngFor="let validation of account_validation_msgs.Username">
+                        <p class="text-danger input-error" *ngIf="(userForms.get('accountDetails.Username').touched || userForms.get('accountDetails.Username').dirty)
+                                                &&userForms.get('accountDetails.Username').hasError(validation.type)">{{validation.msg}}</p>
+                    </div>
+                </div>
+
+                <div formGroupName="passwords">
+                    <div class="form-group">
+                        <label>Password: </label>
+                        <input type="password" class="form-control" placeholder="" formControlName="Password"/>
+                        <div *ngFor="let validation of account_validation_msgs.Password">
+                            <p class="text-danger input-error" *ngIf="(userForms.get('accountDetails.passwords.Password').touched || userForms.get('accountDetails.passwords.Password').dirty)
+                                                    &&userForms.get('accountDetails.passwords.Password').hasError(validation.type)">{{validation.msg}}</p>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Confirm Password: </label>
+                        <input type="password" class="form-control" placeholder="" formControlName="ConfirmPassword"/>
+                        <div *ngFor="let validation of account_validation_msgs.ConfirmPassword">
+                            <p class="text-danger input-error" *ngIf="(userForms.get('accountDetails.passwords.ConfirmPassword').touched || userForms.get('accountDetails.passwords.ConfirmPassword').dirty)
+                                                    &&userForms.get('accountDetails.passwords.ConfirmPassword').hasError(validation.type)">{{validation.msg}}</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" formControlName="Terms" type="checkbox" (change)="test()"/>
+                <label class="form-check-label">
+                    <a>I accept the terms and conditions</a>
+                </label>
+                <div *ngFor="let validation of account_validation_msgs.Terms">
+                    <p class="text-danger input-error" *ngIf="(userForms.get('Terms').touched || userForms.get('Terms').dirty)
+                                            && userForms.get('Terms').hasError(validation.type)">{{validation.msg}}</p>
+                </div> 
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary btn-lg" [disabled]="!userForms.valid" >submit</button>
+            </div>
+        </div>
+    </div>
+</form>
